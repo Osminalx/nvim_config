@@ -1,13 +1,23 @@
 return {
   {
-    "catppuccin/nvim",
-    -- "navarasu/onedark.nvim",
-    -- "olimorris/onedarkpro.nvim",
-    lazy = true,
-    -- name = "onedark_vivid",
-    name = "catppuccin",
+    "navarasu/onedark.nvim",
+    lazy = false,
+    priority = 1000,
+    name = "onedark",
     opts = {
-      flavour = "macchiato",
+      style = "dark",
+      code_style = {
+        comments = "italic",
+        keywords = "bold",
+        functions = "italic,bold",
+        strings = "none",
+        variables = "none",
+      },
+      diagnostics = {
+        darker = true,
+        undercurl = true,
+        background = true,
+      },
       integrations = {
         aerial = true,
         alpha = true,
@@ -47,23 +57,12 @@ return {
         which_key = true,
       },
     },
-    specs = {
-      {
-        "akinsho/bufferline.nvim",
-        optional = true,
-        opts = function(_, opts)
-          if (vim.g.colors_name or ""):find("catppuccin") then
-            opts.highlights = require("catppuccin.groups.integrations.bufferline").get()
-          end
-        end,
-      },
-    },
   },
 
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = "onedark",
     },
   },
 }
