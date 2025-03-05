@@ -5,7 +5,7 @@ return {
     priority = 1000,
     name = "onedark",
     opts = {
-      style = "dark",
+      style = "darker",
       code_style = {
         comments = "italic",
         keywords = "bold",

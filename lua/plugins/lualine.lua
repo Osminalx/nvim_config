@@ -5,18 +5,18 @@ return {
     opts = function()
       return {
         options = {
-          theme = "onedark",
+          theme = "catppuccin",
           globalstatus = true,
-          section_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" }, -- NvChad usa estos separadores
           component_separators = { left = "", right = "" },
           disabled_filetypes = { "dashboard", "NvimTree", "alpha" },
         },
         sections = {
-          lualine_a = { { "mode", icon = "", upper = true } },
-          lualine_b = { { "branch", icon = "" }, "diff", "diagnostics" },
+          lualine_a = { { "mode", icon = "" } },
+          lualine_b = { { "branch", icon = "" }, "diff" },
           lualine_c = { { "filename", path = 1, symbols = { modified = " ●", readonly = " " } } },
-          lualine_x = { "encoding", "fileformat", "filetype" },
-          lualine_y = { { "progress", separator = " ", padding = { left = 1, right = 1 } } },
+          lualine_x = { "diagnostics", "encoding", "fileformat" },
+          lualine_y = { "progress" },
           lualine_z = { { "location", icon = "" } },
         },
       }
