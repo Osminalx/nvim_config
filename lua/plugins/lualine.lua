@@ -5,7 +5,7 @@ return {
     opts = function()
       return {
         options = {
-          theme = "catppuccin",
+          theme = "onedark",
           globalstatus = true,
           section_separators = { left = "", right = "" }, -- NvChad usa estos separadores
           component_separators = { left = "", right = "" },
