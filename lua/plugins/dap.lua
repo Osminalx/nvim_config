@@ -1,11 +1,12 @@
 return {
+  -- 1. Configuración base de DAP (compartida)
   {
     "mfussenegger/nvim-dap",
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
 
-      -- Configuración de codelldb para Rust
+      -- Configuración común para Rust
       dap.adapters.codelldb = {
         type = "server",
         port = "${port}",
@@ -28,45 +29,75 @@ return {
         },
       }
 
-      -- Configuración de DAP UI
-      dap.listeners.before.attach.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.launch.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated.dapui_config = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
-      end
+      -- Configuración para Dart/Flutter (se agrega sin sobrescribir)
+      dap.adapters.dart = {
+        type = "executable",
+        command = vim.fn.stdpath("data") .. "/mason/bin/dart-debug-adapter",
+        args = { "flutter" },
+      }
+
+      dap.configurations.dart = {
+        {
+          type = "dart",
+          request = "launch",
+          name = "Launch Flutter",
+          -- TODO Fix flutter routes
+          dartSdkPath = os.getenv("FLUTTER_HOME") .. "/bin/cache/dart-sdk/", -- Ajusta esta ruta
+          flutterSdkPath = os.getenv("FLUTTER_HOME") .. "/bin", -- Ajusta esta ruta
+          program = "${workspaceFolder}/lib/main.dart",
+          cwd = "${workspaceFolder}",
+        },
+      }
+
+      -- Configuración común de UI
+      dap.listeners.before.attach.dapui_config = dapui.open
+      dap.listeners.before.launch.dapui_config = dapui.open
+      dap.listeners.before.event_terminated.dapui_config = dapui.close
+      dap.listeners.before.event_exited.dapui_config = dapui.close
     end,
   },
 
+  -- 2. DAP UI (sin cambios)
   {
     "rcarriga/nvim-dap-ui",
     dependencies = { "mfussenegger/nvim-dap" },
     config = function()
       require("dapui").setup()
-
-      local dap, dapui = require("dap"), require("dapui")
-
-      dap.listeners.before.attach.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.launch.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated.dapui_config = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
-      end
     end,
   },
 
+  -- 3. Flutter Tools (nueva configuración)
+  {
+    "akinsho/flutter-tools.nvim",
+    ft = "dart",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "stevearc/dressing.nvim",
+    },
+    config = function()
+      require("flutter-tools").setup({
+        widget_guides = {
+          enabled = true,
+        },
+        dev_log = {
+          enabled = true,
+          open_cmd = "tabedit",
+        },
+        lsp = {
+          on_attach = require("lvim.lsp").common_on_attach,
+          capabilities = require("lvim.lsp").default_capabilities,
+        },
+      })
+    end,
+  },
+
+  -- 4. Dart Syntax (nuevo plugin)
+  {
+    "dart-lang/dart-vim-plugin",
+    ft = "dart",
+  },
+
+  -- 5. Configuración de Crates (existente)
   {
     "saecki/crates.nvim",
     ft = { "toml" },
@@ -78,9 +109,6 @@ return {
             enabled = true,
           },
         },
-      })
-      require("cmp").setup.buffer({
-        sources = { { name = "crates" } },
       })
     end,
   },
