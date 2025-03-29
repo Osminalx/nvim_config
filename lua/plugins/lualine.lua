@@ -3,6 +3,14 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     opts = function()
+      local function recording_macro()
+        local reg = vim.fn.reg_recording()
+        if reg ~= "" then
+          return "雷 " .. reg
+        end
+        return ""
+      end
+
       return {
         options = {
           theme = "onedark",
@@ -17,7 +25,18 @@ return {
           lualine_c = { { "filename", path = 1, symbols = { modified = " ●", readonly = " " } } },
           lualine_x = { "diagnostics", "encoding", "fileformat" },
           lualine_y = { "progress" },
-          lualine_z = { { "location", icon = "" } },
+          lualine_z = {
+            { "location", icon = "" },
+            {
+              recording_macro,
+              cond = function()
+                return vim.fn.reg_recording() ~= ""
+              end,
+              color = {
+                gui = "bold",
+              },
+            },
+          },
         },
       }
     end,
