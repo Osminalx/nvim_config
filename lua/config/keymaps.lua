@@ -82,3 +82,5 @@ vim.keymap.set("n", "<A-'>", function()
     vim.api.nvim_set_current_line(new_line)
   end
 end, { noremap = true, silent = true })
+
+vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Exit terminal mode" })
