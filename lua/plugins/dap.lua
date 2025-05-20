@@ -29,26 +29,6 @@ return {
         },
       }
 
-      -- Configuración para Dart/Flutter (se agrega sin sobrescribir)
-      dap.adapters.dart = {
-        type = "executable",
-        command = vim.fn.stdpath("data") .. "/mason/bin/dart-debug-adapter",
-        args = { "flutter" },
-      }
-
-      dap.configurations.dart = {
-        {
-          type = "dart",
-          request = "launch",
-          name = "Launch Flutter",
-          -- TODO Fix flutter routes
-          dartSdkPath = os.getenv("FLUTTER_HOME") .. "/bin/cache/dart-sdk/", -- Ajusta esta ruta
-          flutterSdkPath = os.getenv("FLUTTER_HOME") .. "/bin", -- Ajusta esta ruta
-          program = "${workspaceFolder}/lib/main.dart",
-          cwd = "${workspaceFolder}",
-        },
-      }
-
       -- Configuración común de UI
       dap.listeners.before.attach.dapui_config = dapui.open
       dap.listeners.before.launch.dapui_config = dapui.open
