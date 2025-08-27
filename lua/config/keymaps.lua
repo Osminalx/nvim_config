@@ -84,3 +84,7 @@ vim.keymap.set("n", "<A-'>", function()
 end, { noremap = true, silent = true })
 
 vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Exit terminal mode" })
+
+----- OIL -----
+
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
