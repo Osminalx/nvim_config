@@ -56,6 +56,9 @@ return {
         treesitter_context = true,
         which_key = true,
       },
+      highlights = {
+        ["@variable"] = { fg = "#E06C75" },
+      },
     },
   },
 
