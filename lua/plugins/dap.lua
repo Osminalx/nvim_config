@@ -77,7 +77,19 @@ return {
     ft = "dart",
   },
 
-  -- 5. Configuración de Crates (existente)
+  -- 5. Configuración de nvim-dap-python (sin luarocks)
+  {
+    "mfussenegger/nvim-dap-python",
+    ft = "python",
+    dependencies = "mfussenegger/nvim-dap",
+    build = false,
+    config = function()
+      local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
+      require("dap-python").setup(path)
+    end,
+  },
+
+  -- 6. Configuración de Crates (existente)
   {
     "saecki/crates.nvim",
     ft = { "toml" },
