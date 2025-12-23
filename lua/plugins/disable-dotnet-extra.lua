@@ -1,5 +1,11 @@
--- Desactivar el extra de .NET de LazyVim para que no instale herramientas de .NET
+-- Desactivar específicamente los plugins .NET de LazyVim
 return {
-  -- Desactivar el extra de .NET que carga automáticamente herramientas de C# y F#
+  -- Desactivar neotest-vstest
+  { "nvim-neotest/neotest-vstest", enabled = false },
+
+  -- Desactivar omnisharp-extended-lsp
+  { "Hoffs/omnisharp-extended-lsp.nvim", enabled = false },
+
+  -- Desactivar el extra de .NET de LazyVim
   { import = "lazyvim.plugins.extras.lang.dotnet", enabled = false },
 }
