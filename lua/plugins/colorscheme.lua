@@ -45,7 +45,7 @@ return {
           },
         },
         navic = { enabled = true, custom_bg = "lualine" },
-        neotest = true,
+        -- neotest = true, -- No usamos neotest
         neotree = true,
         noice = true,
         notify = true,
